@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 /*
  *  These tests are not really meant to act as true tests, that verifies functionality.
@@ -18,6 +19,27 @@ using Xunit;
 
 namespace Strategy.Tests {
     public class UnitTest1 {
+        private readonly ITestOutputHelper testOutputHelper;
+        public UnitTest1(ITestOutputHelper testOutputHelper) {
+            this.testOutputHelper = testOutputHelper;
+        }
+
+        [Theory]
+        [InlineData(FileType.Json)]
+        [InlineData(FileType.Csv)]
+        public void SimpleBranchingApproach(FileType fileType) {
+            // Arrange
+            var history = new TransactionHistory(new List<Transaction> {
+                new(DateTimeOffset.Now, DateTimeOffset.Now.AddDays(1), CreditDebitIndicator.Credit, 100),
+                new(DateTimeOffset.Now, DateTimeOffset.Now.AddDays(1), CreditDebitIndicator.Debit, 10)
+            });
+            var formatter = new FormatUsingTraditionalBranching();
+
+            // Act
+            string result = formatter.Format(history, fileType);
+
+            testOutputHelper.WriteLine(result);
+        }
         
         [Theory]
         [InlineData(FileType.Json)]
@@ -26,22 +48,18 @@ namespace Strategy.Tests {
             /*
              * Using applied attributes thru the extension method.
              */
-
-            
-            // Arrange
-            var strategies = new List<IFileFormatter> {
-                new CsvFormatter(),
-                new JsonFormatter()
-            };
-            
             var history = new TransactionHistory(new List<Transaction> {
                 new(DateTimeOffset.Now, DateTimeOffset.Now.AddDays(1), CreditDebitIndicator.Credit, 100),
                 new(DateTimeOffset.Now, DateTimeOffset.Now.AddDays(1), CreditDebitIndicator.Debit, 10)
             });
+            
+            var strategies = new List<ITransactionsFormatter> {
+                new CsvFormatter(),
+                new JsonFormatter()
+            };
 
-            IFileFormatter formatter = strategies.PickFormatter(fileType);
+            ITransactionsFormatter formatter = strategies.PickFormatter(fileType);
 
-            // Act
             string result = formatter.Convert(history);
         }
 
@@ -55,7 +73,7 @@ namespace Strategy.Tests {
 
             
             // Arrange
-            var strategyDictionary = new Dictionary<string, IFileFormatter> { // Use dependency injection in real-world applications.
+            var strategyDictionary = new Dictionary<string, ITransactionsFormatter> { // Use dependency injection in real-world applications.
                 {"csv", new CsvFormatter()},
                 {"json", new JsonFormatter()}
             };
@@ -66,7 +84,7 @@ namespace Strategy.Tests {
             });
             
 
-            IFileFormatter formatter = strategyDictionary[fileType];
+            ITransactionsFormatter formatter = strategyDictionary[fileType];
 
             // Act
             string result = formatter.Convert(history);
@@ -116,7 +134,7 @@ namespace Strategy.Tests {
             services.AddFileFormatters();
             
             // Assert
-            bool hasType = services.Any(t => t.ServiceType == typeof(IFileFormatter) && t.ImplementationType == implementationType);
+            bool hasType = services.Any(t => t.ServiceType == typeof(ITransactionsFormatter) && t.ImplementationType == implementationType);
             Assert.True(hasType);
         }
 
@@ -128,10 +146,10 @@ namespace Strategy.Tests {
             var services = new ServiceCollection();
             services.AddFileFormatters();
             
-            IEnumerable<IFileFormatter> formatters = services.BuildServiceProvider().GetServices <IFileFormatter>();
+            IEnumerable<ITransactionsFormatter> formatters = services.BuildServiceProvider().GetServices <ITransactionsFormatter>();
 
             // Act
-            IFileFormatter formatter = formatters.PickFormatter(fileType);
+            ITransactionsFormatter formatter = formatters.PickFormatter(fileType);
             
             Assert.IsType(type, formatter);
         }

@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\FileFormatterStrategy\FileFormatterStrategy.csproj" />
+      <ProjectReference Include="..\..\src\DesignPatterns.Shared.Domain\DesignPatterns.Shared.Domain.csproj" />
       <ProjectReference Include="..\..\src\Strategy\FileFormatting\FileFormatting.csproj" />
     </ItemGroup>
 
