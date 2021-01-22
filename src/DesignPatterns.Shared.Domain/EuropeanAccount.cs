@@ -8,6 +8,9 @@ namespace DesignPatterns.Shared.Domain {
             id = Guid.NewGuid();
         }
 
-        public string Iban { get; }
+        /// <summary>
+        /// Get or set the account IBAN. 
+        /// </summary>
+        public string Iban { get; set; }
     }
 }
