@@ -7,6 +7,7 @@ namespace DesignPatterns.Shared.Domain {
     /// </summary>
     public class Transaction {
         private Guid id;
+        private readonly string paymentDetails;
 
         public Transaction(
             DateTimeOffset transactionDate,
@@ -25,5 +26,13 @@ namespace DesignPatterns.Shared.Domain {
         public DateTimeOffset ValueDate { get; }
         public CreditDebitIndicator CreditDebitIndicator { get; }
         public decimal Amount { get; }
+
+        public string PaymentDetails {
+            get => paymentDetails;
+            init {
+                if (value.Length > 100) throw new ArgumentException("Details max length is 100 characters.");
+                paymentDetails = value;
+            }
+        }
     }
 }
