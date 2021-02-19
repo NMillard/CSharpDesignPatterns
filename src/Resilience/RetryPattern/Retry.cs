@@ -25,11 +25,12 @@ namespace RetryPattern {
             return this;
         }
 
-        public async Task<RetryResult> RunAsync(Action action) {
+        public async Task<RetryResult> RunAsync(Func<Task> action) {
             for (var i = 0; i < policy.MaximumAttempts; i++) {
                 try {
                     if (i > 0) await Task.Delay(policy.IntervalBetweenRetries);
-                    action();
+                    await action();
+                    break;
                 } catch (Exception e) when (canHandleExceptions[e.GetType()](e)) {
                     retryResult.AddException(e);
                 }

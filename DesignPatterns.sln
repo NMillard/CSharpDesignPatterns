@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetryPattern", "src\Resilie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetryPattern.Tests", "test\RetryPattern.Tests\RetryPattern.Tests.csproj", "{979C2BCE-032B-4A54-9100-C1E34C221E01}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExceptionHandling", "ExceptionHandling", "{9E2883C4-D161-47EA-A3B8-D2A3703EACE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalMiddlewarePipeline", "src\ExceptionHandling\GlobalMiddlewarePipeline\GlobalMiddlewarePipeline.csproj", "{7E5B3F50-4B75-4C3A-80A0-7D82E9002084}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +68,10 @@ Global
 		{979C2BCE-032B-4A54-9100-C1E34C221E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{979C2BCE-032B-4A54-9100-C1E34C221E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{979C2BCE-032B-4A54-9100-C1E34C221E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E5B3F50-4B75-4C3A-80A0-7D82E9002084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E5B3F50-4B75-4C3A-80A0-7D82E9002084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E5B3F50-4B75-4C3A-80A0-7D82E9002084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E5B3F50-4B75-4C3A-80A0-7D82E9002084}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A52B9E80-73C7-4FED-B9AB-38280AA5F910} = {13187860-3AE7-44A7-BC47-4BC2A2B0A16D}
@@ -73,5 +81,6 @@ Global
 		{C421C42A-992D-43D7-9052-817A017E2410} = {13187860-3AE7-44A7-BC47-4BC2A2B0A16D}
 		{2BE8B49C-5836-48FA-AB2F-355F0B78A501} = {A84FD42A-776F-4690-AC75-71AD92C05DFB}
 		{979C2BCE-032B-4A54-9100-C1E34C221E01} = {13187860-3AE7-44A7-BC47-4BC2A2B0A16D}
+		{7E5B3F50-4B75-4C3A-80A0-7D82E9002084} = {9E2883C4-D161-47EA-A3B8-D2A3703EACE0}
 	EndGlobalSection
 EndGlobal
